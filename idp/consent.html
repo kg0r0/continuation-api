@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title> Continuation API Example - IdP Consent Screen</title>
+</head>
+
+<body>
+  <h1>Continuation API Example - IdP Consent Screen</h1>
+  <div>
+    scope={{ .Scope }}
+    fields={{ .Fields }}
+  </div>
+  <button type="submit" id="allow_btn" onclick="allow()">allow</button>
+  <script>
+    async function allow() {
+      const resp = await fetch('/generate_access_token', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      });
+      const { token } = await resp.json();
+      window.IdentityProvider.resolve(token);
+    }
+  </script>
+</body>
+
+</html>
